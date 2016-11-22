@@ -1,4 +1,4 @@
-package com.github.titovartem.resterrortracker.utils.filter.duplicate;
+package com.github.titovartem.resterrortracker.utils.duplicate;
 
 import com.github.titovartem.resterrortracker.entity.ErrorReport;
 

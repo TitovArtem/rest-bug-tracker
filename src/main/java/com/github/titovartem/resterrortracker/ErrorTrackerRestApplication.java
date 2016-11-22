@@ -1,6 +1,7 @@
 package com.github.titovartem.resterrortracker;
 
 import com.github.titovartem.resterrortracker.rest.resources.ErrorReportResource;
+import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 
 /**

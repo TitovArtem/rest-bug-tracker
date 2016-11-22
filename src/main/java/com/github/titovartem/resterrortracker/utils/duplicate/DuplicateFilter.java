@@ -1,4 +1,4 @@
-package com.github.titovartem.resterrortracker.utils.filter.duplicate;
+package com.github.titovartem.resterrortracker.utils.duplicate;
 
 import com.github.titovartem.resterrortracker.utils.filter.EntityFilter;
 
@@ -9,7 +9,7 @@ import java.util.Set;
 
 /**
  * The filter which selects only unique elements are provided by relevant objects created with
- * {@link com.github.titovartem.resterrortracker.utils.filter.duplicate.EntityHashProxyFactory}.
+ * {@link com.github.titovartem.resterrortracker.utils.duplicate.EntityHashProxyFactory}.
  */
 public class DuplicateFilter<T> implements EntityFilter<T> {
 

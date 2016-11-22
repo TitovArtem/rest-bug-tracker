@@ -1,5 +1,7 @@
 package com.github.titovartem.resterrortracker.rest.resources;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.titovartem.resterrortracker.entity.ErrorReport;
 import com.github.titovartem.resterrortracker.service.ErrorReportService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +38,23 @@ public class ErrorReportResource {
     @Produces({MediaType.APPLICATION_JSON})
     public List<ErrorReport> getErrorReportsWithoutDuplicates() {
         return errorReportService.getErrorReportsWithoutDuplicates();
+    }
+
+    @GET
+    @Path("/group-by-duplicates")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response getErrorReportsGroupedByDuplicates() {
+        List<List<ErrorReport>> errors = errorReportService.getGroupedErrorReportsByDuplicates();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json;
+        try {
+            json = objectMapper.writeValueAsString(errors);
+        } catch (JsonProcessingException exc) {
+            // TODO: log exception
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+        return Response.ok().entity(json).build();
     }
 
     @POST
