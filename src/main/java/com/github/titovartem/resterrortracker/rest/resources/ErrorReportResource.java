@@ -79,6 +79,20 @@ public class ErrorReportResource {
                 .entity("The error has been updated").build();
     }
 
+    @POST
+    @Path("{id}/fix")
+    public Response fixErrorReport(@PathParam("id") Long id) {
+        ErrorReport errorReport = errorReportService.getErrorReportById(id);
+        if (errorReport == null) {
+            return Response.status(Response.Status.BAD_REQUEST).
+                    entity("The error with the given id doesn't exist").build();
+        }
+        errorReport.setFixed(true);
+        errorReportService.updateErrorReport(errorReport);
+        return Response.status(Response.Status.OK)
+                .entity("The error has been fixed").build();
+    }
+
     @DELETE
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_JSON})
