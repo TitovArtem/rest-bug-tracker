@@ -12,4 +12,6 @@ public interface ErrorReportService {
     List<ErrorReport> getAllErrorReports();
     ErrorReport getErrorReportById(Long id);
     void deleteErrorReport(Long id);
+
+    List<ErrorReport> getErrorReportsWithoutDuplicates();
 }

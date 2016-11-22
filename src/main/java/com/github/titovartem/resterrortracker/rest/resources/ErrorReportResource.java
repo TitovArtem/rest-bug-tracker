@@ -31,6 +31,13 @@ public class ErrorReportResource {
         return errorReportService.getErrorReportById(id);
     }
 
+    @GET
+    @Path("/without-duplicates")
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<ErrorReport> getErrorReportsWithoutDuplicates() {
+        return errorReportService.getErrorReportsWithoutDuplicates();
+    }
+
     @POST
     @Consumes({MediaType.APPLICATION_JSON})
     public Response addErrorReport(ErrorReport report) {
