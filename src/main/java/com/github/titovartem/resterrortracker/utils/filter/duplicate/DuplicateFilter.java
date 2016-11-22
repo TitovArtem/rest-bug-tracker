@@ -13,10 +13,10 @@ import java.util.Set;
  */
 public class DuplicateFilter<T> implements EntityFilter<T> {
 
-    private EntityHashProxyFactory<T> decoratorFactory;
+    private EntityHashProxyFactory<T> proxyFactory;
 
-    public DuplicateFilter(EntityHashProxyFactory<T> decoratorFactory) {
-        this.decoratorFactory = decoratorFactory;
+    public DuplicateFilter(EntityHashProxyFactory<T> proxyFactory) {
+        this.proxyFactory = proxyFactory;
     }
 
     @Override
@@ -25,9 +25,9 @@ public class DuplicateFilter<T> implements EntityFilter<T> {
 
         List<T> res = new LinkedList<T>();
         for (T entity : elements) {
-            Object entityDecorator = decoratorFactory.create(entity);
-            if (!entitySet.contains(entityDecorator)) {
-                entitySet.add(entityDecorator);
+            Object entityProxy = proxyFactory.create(entity);
+            if (!entitySet.contains(entityProxy)) {
+                entitySet.add(entityProxy);
                 res.add(entity);
             }
         }
