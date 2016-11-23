@@ -99,6 +99,7 @@ public class ErrorReportResource {
             return Response.status(Response.Status.BAD_REQUEST).
                     entity("The error with the given id doesn't exist").build();
         }
+        report.setId(errorReport.getId());
         errorReportService.updateErrorReport(report);
         return Response.status(Response.Status.OK)
                 .entity("The error has been updated").build();
