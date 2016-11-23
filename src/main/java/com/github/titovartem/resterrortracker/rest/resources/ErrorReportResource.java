@@ -20,10 +20,35 @@ public class ErrorReportResource {
     @Autowired
     private ErrorReportService errorReportService;
 
+    public ErrorReportService getErrorReportService() {
+        return errorReportService;
+    }
+
+    public void setErrorReportService(ErrorReportService errorReportService) {
+        if (errorReportService == null) {
+            throw new NullPointerException("The given service is null.");
+        }
+        this.errorReportService = errorReportService;
+    }
+
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     public List<ErrorReport> getAllErrorReports() {
         return errorReportService.getAllErrorReports();
+    }
+
+    @GET
+    @Path("/fixed")
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<ErrorReport> getFixedErrorReports() {
+        return errorReportService.getFixedErrorReports();
+    }
+
+    @GET
+    @Path("/opened")
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<ErrorReport> getOpenedErrorReports() {
+        return errorReportService.getOpenedErrorReports();
     }
 
     @GET

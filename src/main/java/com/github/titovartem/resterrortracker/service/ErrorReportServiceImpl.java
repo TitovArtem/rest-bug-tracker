@@ -54,6 +54,16 @@ public class ErrorReportServiceImpl implements ErrorReportService {
     }
 
     @Override
+    public List<ErrorReport> getFixedErrorReports() {
+        return dao.getErrorReportsByFixedState(true);
+    }
+
+    @Override
+    public List<ErrorReport> getOpenedErrorReports() {
+        return dao.getErrorReportsByFixedState(false);
+    }
+
+    @Override
     public ErrorReport getErrorReportById(Long id) {
         return dao.getErrorReportById(id);
     }

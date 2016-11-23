@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Repository
@@ -26,12 +27,15 @@ public class ErrorReportDaoImpl implements ErrorReportDao {
 
     @Override
     public List<ErrorReport> getAllErrorReports() {
-//        TypedQuery<ErrorReport> query = em.createQuery("select p from ErrorReport p", ErrorReport.class);
-//        if (query != null) {
-//            return query.getResultList();
-//        }
-//        return null;
         return em.createQuery("select p from ErrorReport p", ErrorReport.class).getResultList();
+    }
+
+    @Override
+    public List<ErrorReport> getErrorReportsByFixedState(boolean fixedState) {
+        TypedQuery<ErrorReport> query = em.createQuery("select e from ErrorReport e " +
+                "where e.isFixed = :fixedState", ErrorReport.class);
+        query.setParameter("fixedState", fixedState);
+        return query.getResultList();
     }
 
     @Override

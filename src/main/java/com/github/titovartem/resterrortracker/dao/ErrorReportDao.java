@@ -14,6 +14,7 @@ public interface ErrorReportDao {
     void addErrorReport(ErrorReport error);
     void updateErrorReport(ErrorReport error);
     List<ErrorReport> getAllErrorReports();
+    List<ErrorReport> getErrorReportsByFixedState(boolean fixedState);
     ErrorReport getErrorReportById(Long id);
     void deleteErrorReport(Long id);
 }
