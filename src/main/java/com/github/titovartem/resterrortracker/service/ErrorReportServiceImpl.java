@@ -3,7 +3,6 @@ package com.github.titovartem.resterrortracker.service;
 
 import com.github.titovartem.resterrortracker.dao.ErrorReportDao;
 import com.github.titovartem.resterrortracker.entity.ErrorReport;
-import com.github.titovartem.resterrortracker.utils.duplicate.EntityHashProxyFactory;
 import com.github.titovartem.resterrortracker.utils.filter.EntityFilter;
 import com.github.titovartem.resterrortracker.utils.duplicate.DuplicateFilter;
 import com.github.titovartem.resterrortracker.utils.duplicate.ErrorReportHashProxyFactory;
@@ -24,16 +23,33 @@ public class ErrorReportServiceImpl implements ErrorReportService {
     @Autowired
     private ErrorReportDao dao;
 
-    private EntityFilter<ErrorReport> duplicateFilter =
+    private EntityFilter<ErrorReport> filter =
             new DuplicateFilter<ErrorReport>(new ErrorReportHashProxyFactory());
 
-    private EntityGroupSeparator<Object, ErrorReport> duplicateGroupSeparator =
+    private EntityGroupSeparator<?, ErrorReport> groupSeparator =
             new DuplicateGroupSeparator<ErrorReport>(new ErrorReportHashProxyFactory());
 
 
-    public void setErrorReportHashProxyFactory(EntityHashProxyFactory<ErrorReport> factory) {
-        duplicateFilter = new DuplicateFilter<ErrorReport>(factory);
-        duplicateGroupSeparator = new DuplicateGroupSeparator<ErrorReport>(factory);
+    @Override
+    public void setErrorReportDuplicateFilter(EntityFilter<ErrorReport> filter) {
+        this.filter = filter;
+    }
+
+    @Override
+    public EntityFilter<ErrorReport> getErrorReportDuplicateFilter() {
+        return filter;
+    }
+
+    @Override
+    public void setErrorReportDuplicateGroupSeparator(
+            EntityGroupSeparator<?, ErrorReport> groupSeparator)
+    {
+        this.groupSeparator = groupSeparator;
+    }
+
+    @Override
+    public EntityGroupSeparator<?, ErrorReport> getErrorReportDuplicateGroupSeparator() {
+        return groupSeparator;
     }
 
     @Override
@@ -77,13 +93,12 @@ public class ErrorReportServiceImpl implements ErrorReportService {
     @Override
     public List<ErrorReport> getErrorReportsWithoutDuplicates() {
         List<ErrorReport> errors = dao.getAllErrorReports();
-        return duplicateFilter.filter(errors);
+        return filter.filter(errors);
     }
 
     @Override
     public List<List<ErrorReport>> getGroupedErrorReportsByDuplicates() {
-        Map<Object, List<ErrorReport>> groups =
-                duplicateGroupSeparator.group(dao.getAllErrorReports());
+        Map<?, List<ErrorReport>> groups = groupSeparator.group(dao.getAllErrorReports());
         return new ArrayList<List<ErrorReport>>(groups.values());
     }
 }
