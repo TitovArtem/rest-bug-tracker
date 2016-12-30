@@ -12,7 +12,7 @@ public interface EntityGroupSeparator<K, E> {
     /**
      * Groups the given elements.
      * @param elements a list of elements
-     * @return a map where keys are group and values are elements
+     * @return a map where keys are groups and values are elements
      */
     Map<K, List<E>> group(List<E> elements);
 }

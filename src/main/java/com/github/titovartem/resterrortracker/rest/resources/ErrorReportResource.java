@@ -12,7 +12,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
-
+/**
+ * Class that handles REST requests for accessing to error reports.
+ */
 @Component
 @Path("/errors")
 public class ErrorReportResource {
@@ -25,9 +27,6 @@ public class ErrorReportResource {
     }
 
     public void setErrorReportService(ErrorReportService errorReportService) {
-        if (errorReportService == null) {
-            throw new NullPointerException("The given service is null.");
-        }
         this.errorReportService = errorReportService;
     }
 
