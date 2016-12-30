@@ -2,6 +2,7 @@ package com.github.titovartem.resterrortracker.rest.resources;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.github.titovartem.resterrortracker.entity.ErrorReport;
 import com.github.titovartem.resterrortracker.service.ErrorReportService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,6 +72,8 @@ public class ErrorReportResource {
         List<List<ErrorReport>> errors = errorReportService.getGroupedErrorReportsByDuplicates();
 
         ObjectMapper objectMapper = new ObjectMapper();
+        // Disable the timestamp serialization to output it in the usual form for timestamps
+        objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         String json;
         try {
             json = objectMapper.writeValueAsString(errors);
