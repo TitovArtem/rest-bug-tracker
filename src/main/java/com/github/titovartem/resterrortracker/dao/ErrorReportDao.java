@@ -2,6 +2,7 @@ package com.github.titovartem.resterrortracker.dao;
 
 
 import com.github.titovartem.resterrortracker.entity.ErrorReport;
+import com.github.titovartem.resterrortracker.utils.Predicate;
 
 import java.util.List;
 
@@ -21,11 +22,10 @@ public interface ErrorReportDao {
     List<ErrorReport> getAllErrorReports();
 
     /**
-     * @param fixedState a state of needed error reports
-     *                   (true - for fixed errors, otherwise - false)
-     * @return a list of error reports that have the given state (fixed or open)
+     * @param predicate a predicate to filter error reports
+     * @return list of error reports filtered by the given predicate
      */
-    List<ErrorReport> getErrorReportsByFixedState(boolean fixedState);
+    List<ErrorReport> getAllErrorReports(Predicate<ErrorReport> predicate);
 
     /** @return a error report which has the given id */
     ErrorReport getErrorReportById(Long id);

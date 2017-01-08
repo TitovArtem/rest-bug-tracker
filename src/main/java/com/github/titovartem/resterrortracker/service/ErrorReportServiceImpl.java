@@ -3,6 +3,7 @@ package com.github.titovartem.resterrortracker.service;
 
 import com.github.titovartem.resterrortracker.dao.ErrorReportDao;
 import com.github.titovartem.resterrortracker.entity.ErrorReport;
+import com.github.titovartem.resterrortracker.utils.Predicate;
 import com.github.titovartem.resterrortracker.utils.filter.EntityFilter;
 import com.github.titovartem.resterrortracker.utils.duplicate.DuplicateFilter;
 import com.github.titovartem.resterrortracker.utils.duplicate.ErrorReportHashProxyFactory;
@@ -69,14 +70,25 @@ public class ErrorReportServiceImpl implements ErrorReportService {
         return dao.getAllErrorReports();
     }
 
+    /* Returns a list of fixed errors if the given state is true,
+    otherwise returns a list of open errors. */
+    private List<ErrorReport> getErrorReportsByFixedState(final boolean isFixed) {
+        return dao.getAllErrorReports(new Predicate<ErrorReport>() {
+            @Override
+            public boolean apply(ErrorReport errorReport) {
+                return errorReport.isFixed() == isFixed;
+            }
+        });
+    }
+
     @Override
     public List<ErrorReport> getFixedErrorReports() {
-        return dao.getErrorReportsByFixedState(true);
+        return getErrorReportsByFixedState(true);
     }
 
     @Override
     public List<ErrorReport> getOpenedErrorReports() {
-        return dao.getErrorReportsByFixedState(false);
+        return getErrorReportsByFixedState(false);
     }
 
     @Override
